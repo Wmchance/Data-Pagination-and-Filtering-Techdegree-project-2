@@ -62,7 +62,6 @@ function showPage (list, page) {
          studentList.appendChild(newLI);
       }
    }
-
 }
 
 /*
@@ -70,6 +69,40 @@ Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 
+function addPagination(list) {
 
+   const numOfPages = Math.ceil(list.length / itemsPerPage); 
+   const linkList = document.querySelector('.link-list');
+   linkList.innerHTML = '';
+
+   console.log(numOfPages);
+   console.log(list);
+
+   for(let i=1; i<numOfPages+1; i++){
+
+      const newLI = document.createElement('li'); 
+
+      const newBtn = document.createElement('button');
+      newBtn.type = 'button';
+      newBtn.innerText = `${i}`; 
+      newLI.appendChild(newBtn);
+
+      linkList.appendChild(newLI);
+
+      document.querySelector('button').className = 'active';
+
+      linkList.addEventListener('click', (e) => {
+         if (e.target.tagName === 'BUTTON') {
+            document.querySelector('.active').className = '';
+            e.target.className = 'active'; 
+            showPage(list, e.target.textContent); 
+         }
+
+      });
+ 
+   }
+}
 
 // Call functions
+showPage(data, 1);
+addPagination(data);
