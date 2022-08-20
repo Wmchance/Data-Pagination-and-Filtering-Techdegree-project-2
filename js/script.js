@@ -3,7 +3,106 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
+/*
+Search Bar
+*/
 
+const header = document.querySelector('.header'); 
+
+const newLabel = document.createElement('label');
+newLabel.for = 'search'; //? need to see how to set
+newLabel.className = 'student-search'; 
+
+const newSpan = document.createElement('span');
+newLabel.appendChild(newSpan);
+
+const newInput = document.createElement('input');
+newInput.id = 'search';
+newInput.placeholder = 'Search by name...';
+newInput.type = 'text';
+newLabel.appendChild(newInput);
+
+const newBtn = document.createElement('button');
+newBtn.type = 'button';
+
+   const newImg = document.createElement('img');
+   newImg.src = "img/icn-search.svg";
+   newImg.alt = "Search icon"; 
+   newBtn.append(newImg);
+
+newLabel.appendChild(newBtn);
+
+header.appendChild(newLabel); 
+
+/*
+Search function
+*/
+
+const submit = document.querySelector('button');
+const newMessage = document.createElement('p');
+
+submit.addEventListener ('click', (e) => {
+
+   e.preventDefault();
+
+   const searchInput = newInput.value;
+   newInput.value = '';
+   let newList = [];
+
+   for (let i=0; i<data.length; i++) {
+      const firstName = data[i].name.first.toLowerCase();
+      const lastName = data[i].name.last.toLowerCase();
+
+      if (searchInput.value != 0 && (firstName.includes(searchInput.toLowerCase()) || lastName.includes(searchInput.toLowerCase()))) {
+         newList.push(data[i]);
+      }
+   }
+
+   if(newList.length === 0) {
+      newMessage.textContent = 'No results found';
+      document.querySelector('div').appendChild(newMessage); 
+   }
+
+   if(newList.length !== 0) {
+      newMessage.textContent = '';
+      document.querySelector('div').appendChild(newMessage); 
+   }
+
+   showPage(newList, 1);
+   addPagination(newList);
+
+}) 
+
+newMessage.textContent = ''; 
+
+newInput.addEventListener ('keyup', () => {
+
+   const searchInput = newInput.value;
+   let newList = [];
+
+   for (let i=0; i<data.length; i++) {
+      const firstName = data[i].name.first.toLowerCase();
+      const lastName = data[i].name.last.toLowerCase();
+
+      if (searchInput.value != 0 && (firstName.includes(searchInput.toLowerCase()) || lastName.includes(searchInput.toLowerCase()))) {
+         newList.push(data[i]);
+      }
+   }
+
+   if(newList.length === 0) {
+      newMessage.textContent = 'No results found';
+      document.querySelector('div').appendChild(newMessage); 
+   }
+
+   if(newList.length !== 0) {
+      newMessage.textContent = '';
+      document.querySelector('div').appendChild(newMessage); 
+   }
+   
+   showPage(newList, 1);
+   addPagination(newList);
+
+}) 
 
 /*
 For assistance:
@@ -74,9 +173,6 @@ function addPagination(list) {
    const numOfPages = Math.ceil(list.length / itemsPerPage); 
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
-
-   console.log(numOfPages);
-   console.log(list);
 
    for(let i=1; i<numOfPages+1; i++){
 
