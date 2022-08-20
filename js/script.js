@@ -185,7 +185,7 @@ function addPagination(list) {
 
       linkList.appendChild(newLI);
 
-      document.querySelector('button').className = 'active';
+      document.querySelectorAll('button')[1].className = 'active';
 
       linkList.addEventListener('click', (e) => {
          if (e.target.tagName === 'BUTTON') {
