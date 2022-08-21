@@ -5,12 +5,12 @@ FSJS Project 2 - Data Pagination and Filtering
 
 /*
 Search Bar
+Here the new elements for the Serach Bar are created and appended to the DOM
 */
 
 const header = document.querySelector('.header'); 
 
 const newLabel = document.createElement('label');
-newLabel.for = 'search'; //? need to see how to set
 newLabel.className = 'student-search'; 
 
 const newSpan = document.createElement('span');
@@ -22,6 +22,7 @@ newInput.placeholder = 'Search by name...';
 newInput.type = 'text';
 newLabel.appendChild(newInput);
 
+// Button element - created and appended
 const newBtn = document.createElement('button');
 newBtn.type = 'button';
 
@@ -36,11 +37,13 @@ header.appendChild(newLabel);
 
 /*
 Search function
+Here the functionality for the Serach Bar is added
 */
 
 const submit = document.querySelector('button');
 const newMessage = document.createElement('p');
 
+//on 'click' event
 submit.addEventListener ('click', (e) => {
 
    e.preventDefault();
@@ -49,6 +52,7 @@ submit.addEventListener ('click', (e) => {
    newInput.value = '';
    let newList = [];
 
+   //Function to compare searched value to name values in the data array
    for (let i=0; i<data.length; i++) {
       const firstName = data[i].name.first.toLowerCase();
       const lastName = data[i].name.last.toLowerCase();
@@ -58,6 +62,7 @@ submit.addEventListener ('click', (e) => {
       }
    }
 
+   //Set conditions and display for when no matches are found
    if(newList.length === 0) {
       newMessage.textContent = 'No results found';
       document.querySelector('div').appendChild(newMessage); 
@@ -75,11 +80,13 @@ submit.addEventListener ('click', (e) => {
 
 newMessage.textContent = ''; 
 
+//'keyup' event
 newInput.addEventListener ('keyup', () => {
 
    const searchInput = newInput.value;
    let newList = [];
 
+   //Function to compare searched value to name values in the data array
    for (let i=0; i<data.length; i++) {
       const firstName = data[i].name.first.toLowerCase();
       const lastName = data[i].name.last.toLowerCase();
@@ -89,6 +96,7 @@ newInput.addEventListener ('keyup', () => {
       }
    }
 
+   //Set conditions and display for when no matches are found
    if(newList.length === 0) {
       newMessage.textContent = 'No results found';
       document.querySelector('div').appendChild(newMessage); 
@@ -105,14 +113,6 @@ newInput.addEventListener ('keyup', () => {
 }) 
 
 /*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
-*/
-
-
-
-/*
 Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
@@ -126,6 +126,10 @@ function showPage (list, page) {
    const studentList = document.querySelector('.student-list'); 
    studentList.innerHTML = '';
 
+   /*
+   Creates the elements to display the selected information from each data object
+   Elements are created based on the start & end index - for loop runs over entire data array, but only objs within the set index are displayed
+   */
    for (let i=0; i<list.length; i++) {
       if (i>=startIndex && i<endIndex) {
          const newLI = document.createElement('li'); 
@@ -174,6 +178,7 @@ function addPagination(list) {
    const linkList = document.querySelector('.link-list');
    linkList.innerHTML = '';
 
+   //Creates button elements for each page
    for(let i=1; i<numOfPages+1; i++){
 
       const newLI = document.createElement('li'); 
@@ -187,6 +192,11 @@ function addPagination(list) {
 
       document.querySelectorAll('button')[1].className = 'active';
 
+      /*
+      Sets event function to call to 'showPage' function with the button number passed as the 'page' argument
+      This has the displayed elements showen based on the start and end indexes associated with the button's page number
+      This also sets the 'active' class to the clicked button element 
+      */
       linkList.addEventListener('click', (e) => {
          if (e.target.tagName === 'BUTTON') {
             document.querySelector('.active').className = '';
